@@ -27,8 +27,8 @@ CREATE TABLE movie(
     popularity NUMERIC(3),
     release_date DATE,
     country_of_origin VARCHAR2(250),
-    income NUMERIC(4),                                          -- e.g. 3.5m
-    production_cost NUMERIC(4),                                 --e.g. 3.5m
+    income NUMERIC(4,2),                                          -- e.g. 3.5 million
+    production_cost NUMERIC(4,2),                                 --e.g. 3.5 million
     duration NUMERIC(3),                                        --in minutes    
     filming_locations VARCHAR2(1000)
     );
@@ -52,7 +52,7 @@ CREATE TABLE industry_person(
     birth_date DATE,
     birth_place VARCHAR2(100),
     biography VARCHAR2(500),
-    names VARCHAR2(100),
+    name VARCHAR2(100),
     known_for VARCHAR2(100)
     );
 
