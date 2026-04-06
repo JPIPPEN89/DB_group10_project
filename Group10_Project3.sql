@@ -1,9 +1,24 @@
-DROP TABLE movie CASCADE CONSTRAINTS;
-DROP TABLE actor CASCADE CONSTRAINTS;
-DROP TABLE creator CASCADE CONSTRAINTS;
-DROP TABLE languages CASCADE CONSTRAINTS;
-DROP TABLE film_locations CASCADE CONSTRAINTS;
+DROP TABLE has_credit       CASCADE CONSTRAINTS;
+DROP TABLE writes           CASCADE CONSTRAINTS;
+DROP TABLE cast_by          CASCADE CONSTRAINTS;
+DROP TABLE acts_in          CASCADE CONSTRAINTS;
+DROP TABLE awards           CASCADE CONSTRAINTS;
+DROP TABLE producer         CASCADE CONSTRAINTS;
+DROP TABLE director         CASCADE CONSTRAINTS;
+DROP TABLE writer           CASCADE CONSTRAINTS;
+DROP TABLE photos           CASCADE CONSTRAINTS;
+DROP TABLE relatives        CASCADE CONSTRAINTS;
+DROP TABLE other_works      CASCADE CONSTRAINTS;
+DROP TABLE reviews          CASCADE CONSTRAINTS;
+DROP TABLE movie_genre      CASCADE CONSTRAINTS;
+DROP TABLE film_locations   CASCADE CONSTRAINTS;
 DROP TABLE production_companies CASCADE CONSTRAINTS;
+DROP TABLE languages        CASCADE CONSTRAINTS;
+DROP TABLE stars            CASCADE CONSTRAINTS;
+DROP TABLE creator          CASCADE CONSTRAINTS;
+DROP TABLE genre            CASCADE CONSTRAINTS;
+DROP TABLE movie            CASCADE CONSTRAINTS;
+
 
 
 
@@ -30,12 +45,12 @@ CREATE TABLE languages(											--NEED TO DOUBLE CHECK WHICH IS SUPPOSED TO BE
 
 CREATE TABLE film_locations(
 	filming_locations VARCHAR2(20),								--NEED TO DOUBLE CHECK WHICH IS SUPPOSED TO BE PRIMARY KEY
-	movie_ID
+	movie_ID NUMERIC(5)
 	);
 
 CREATE TABLE production_companies(
 	production_companies VARCHAR2(20),
-	movie_ID
+	movie_ID NUMERIC(5)
 	);
 	
 CREATE TABLE reviews(
@@ -46,8 +61,9 @@ CREATE TABLE reviews(
 	);
 	
 CREATE TABLE movie_genre(
-	genre VARCHAR2(20) CONSTRAINT genre_pk PRIMARY KEY,
-	movie VARCHAR2(20) CONSTRAINT moview_pk PRIMARY KEY        -- both are primary keys
+	genre_id    NUMERIC(5),
+    movie_id    NUMERIC(5),
+    CONSTRAINT movie_genre_pk PRIMARY KEY (genre_id, movie_id)    -- both are primary keys
 	);
 	
 CREATE TABLE genre(
@@ -56,8 +72,9 @@ CREATE TABLE genre(
 	);
 	
 CREATE TABLE acts_in(
-	movie NUMERIC(5) CONSTRAINT movie_pk PRIMARY KEY,
-	star NUMERIC(5) CONSTRAINT star_pk PRIMARY KEY
+	movie_id    NUMERIC(5),
+    star_id     NUMERIC(5),
+    CONSTRAINT acts_in_pk PRIMARY KEY (movie_id, star_id)
 	);
 	
 CREATE TABLE stars(
@@ -65,27 +82,31 @@ CREATE TABLE stars(
 	birth_date NUMERIC(6),									--mayber there is a date data TYPE
 	age NUMERIC(3),
 	height NUMERIC(3), 										-- in inches
-	known_for VARCHAR2(50),
+	known_for VARCHAR2(50)
 	);
 	
 CREATE TABLE other_works(
-	works VARCHAR2(20) CONSTRAINT works_pk PRIMARY KEY,
-	star NUMERIC(5) CONSTRAINT star_pk PRIMARY key
+	works   VARCHAR2(100),
+    star_id NUMERIC(5),
+    CONSTRAINT other_works_pk PRIMARY KEY (works, star_id)
 	);
 	
 CREATE TABLE relatives(
-	name VARCHAR2(20) CONSTRAINT name_pk PRIMARY KEY,
-	related_to NUMERIC(5) CONSTRAINT related_to_pk PRIMARY key
+	name    VARCHAR2(50),
+    star_id NUMERIC(5),
+    CONSTRAINT relatives_pk PRIMARY KEY (name, star_id)
 	);
 	
 CREATE TABLE photos(
-	photo VARCHAR2(20) CONSTRAINT photo_pk PRIMARY KEY,
-	star NUMERIC(5) CONSTRAINT star_pk PRIMARY KEY
+	photo   VARCHAR2(200),
+    star_id NUMERIC(5),
+    CONSTRAINT photos_pk PRIMARY KEY (photo, star_id)
 	);
 	
 CREATE TABLE cast_by(
-	star NUMERIC(5) CONSTRAINT star_pk PRIMARY KEY,
-	creator NUMERIC(5) CONSTRAINT creator_pk PRIMARY key
+	star_id     NUMERIC(5),
+    creator_id  NUMERIC(5),
+    CONSTRAINT cast_by_pk PRIMARY KEY (star_id, creator_id)
 	);
 	
 CREATE TABLE creator(
@@ -98,27 +119,27 @@ CREATE TABLE creator(
 	);
 	
 CREATE TABLE awards(
-	award VARCHAR2(20) CONSTRAINT award_pk PRIMARY KEY,
-	creator NUMERIC(5) CONSTRAINT creator_pk PRIMARY key
+	award       VARCHAR2(100),
+    creator_id  NUMERIC(5),
+    CONSTRAINT awards_pk PRIMARY KEY (award, creator_id)
 	);
 	
 CREATE TABLE producer(
 	producer_id NUMERIC(5) CONSTRAINT producer_id_pk PRIMARY KEY, 
 	creator NUMERIC(5) -- foreign key
 	);
-	
-CREATE TABLE director(
-	director_id NUMERIC(5) CONSTRAINT director_id_pk PRIMARY KEY,
-	creator NUMERIC(5) -- foreign key
-	);
+
+
+CREATE TABLE director (
+    creator_id          NUMERIC(5)      CONSTRAINT director_pk PRIMARY KEY,
+    guild_membership    VARCHAR2(100),
+    CONSTRAINT director_creator_fk  FOREIGN KEY (creator_id) REFERENCES creator(creator_id)
+);
 	
 CREATE TABLE writer(
 	writer_id NUMERIC(5) CONSTRAINT writer_id_pk PRIMARY KEY,
 	creator NUMERIC(5) -- foreign key
 	);
+
 	
-CREATE TABLE director(
-	movie_id NUMERIC(5) CONSTRAINT movie_id_pk PRIMARY KEY,
-	creator NUMERIC(5) CONSTRAINT creator_id_pk PRIMARY KEY
-	);
-	
+
