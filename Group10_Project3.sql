@@ -392,12 +392,6 @@ INSERT INTO production_companies VALUES (
     3
 );
 
-INSERT INTO reviews VALUES (
-    <review_id>,
-    <review_score>,
-    '<review>',
-    <movie_ID>
-);
 
 -- =========================
 -- JUNCTION TABLES
@@ -595,56 +589,75 @@ INSERT INTO industry_person_awards VALUES (
 -- =========================
 
 INSERT INTO movie VALUES (
-    <movie_ID>,
-    '<movie_name>',
-    <popularity>,
-    DATE '<YYYY-MM-DD>',
-    '<country_of_origin>',
-    <income>,
-    <production_cost>,
-    <duration>,
-    '<filming_locations>'
+    4,
+    'Zombieland',
+    1128,
+    DATE '2009-10-02',
+    'United States',
+    102,
+    23.6,
+    88,
+    'Atlanta, Georgia, USA'
 );
 
 INSERT INTO genre VALUES (
-    <genre_id>,
-    '<genre_name>'
+    4,
+    'Dark Comedy'
 );
 
 INSERT INTO stars VALUES (
-    <star_id>,
-    '<star_name>',
-    DATE '<YYYY-MM-DD>',
-    <height>,
-    '<biography>',
-    '<alt_names>'
+    4,
+    'Woody Harrelson',
+    DATE '1961-06-23',
+    69,
+    'Academy Award-nominated and Emmy Award-winning 
+    actor Woodrow Tracy Harrelson was born on July 23, 1961 in Midland, 
+    Texas, to Diane Lou (Oswald) and Charles Harrelson....',
+    NULL
 );
 
 INSERT INTO industry_person VALUES (
-    <industry_person_id>,
-    DATE '<YYYY-MM-DD>',
-    '<birth_place>',
-    '<biography>',
-    '<name>',
-    '<known_for>'
+    7,
+    DATE '1969-07-23',
+    'Phoenix, Arizona, USA',
+    'Rhett Reese is an American screenwriter and producer known for writing
+     the Deadpool film trilogy starring Ryan Reynolds and Zombieland.',
+    'Rhett Reese',
+    'Writing'
 );
+
+INSERT INTO industry_person VALUES (
+    8,
+    NULL,
+    NULL,
+    NULL,
+    'Gavin Polone',
+    '8mm, Premium Rush'
+);
+
+
 
 -- =========================
 -- SUBTYPE TABLES
 -- =========================
 
 INSERT INTO producer VALUES (
-    <industry_person_id>,
+    7,
+    '<production_company>'
+);
+
+INSERT INTO producer VALUES (
+    8,
     '<production_company>'
 );
 
 INSERT INTO director VALUES (
-    <industry_person_id>,
+    5,
     '<guild_membership>'
 );
 
 INSERT INTO writer VALUES (
-    <industry_person_id>,
+    7,
     '<genre_speciality>'
 );
 
@@ -653,20 +666,20 @@ INSERT INTO writer VALUES (
 -- =========================
 
 INSERT INTO movie_languages VALUES (
-    '<language>',
-    <movie_ID>
+    'English',
+    4
 );
 
 INSERT INTO production_companies VALUES (
-    '<production_company>',
-    <movie_ID>
+    'Columbia Pictures',
+    4
 );
 
 INSERT INTO reviews VALUES (
-    <review_id>,
-    <review_score>,
-    '<review>',
-    <movie_ID>
+    2,
+    5,
+    'review...',
+    4
 );
 
 -- =========================
@@ -674,28 +687,38 @@ INSERT INTO reviews VALUES (
 -- =========================
 
 INSERT INTO belongs_to VALUES (
-    <genre_id>,
-    <movie_ID>
+    4,
+    4
 );
 
 INSERT INTO acts_in VALUES (
-    <movie_ID>,
-    <star_id>
+    4,
+    4
 );
 
 INSERT INTO writes VALUES (
-    <movie_ID>,
-    <industry_person_id>
+    4,
+    7
 );
 
 INSERT INTO has_credit VALUES (
-    <movie_ID>,
-    <industry_person_id>
+    4,
+    7
+);
+
+INSERT INTO has_credit VALUES (
+    4,
+    5
+);
+
+INSERT INTO has_credit VALUES (
+    4,
+    8
 );
 
 INSERT INTO cast_by VALUES (
-    <star_id>,
-    <industry_person_id>
+    4,
+    5
 );
 
 -- =========================
@@ -703,24 +726,31 @@ INSERT INTO cast_by VALUES (
 -- =========================
 
 INSERT INTO stars_other_works VALUES (
-    '<work>',
-    <star_id>
+    'True Detective',
+    4
+);
+
+INSERT INTO stars_other_works VALUES (
+    'Natural Born Killers',
+    4
 );
 
 INSERT INTO relatives VALUES (
-    '<relative_name>',
-    <star_id>
+    'Denni Montana Harrelson',
+    4
+);
+
+INSERT INTO relatives VALUES (
+    'Diane Lou Harrelson',
+    4
 );
 
 INSERT INTO stars_photos VALUES (
-    '<photo_path>',
-    <star_id>
+    'Time Magazine',
+    4
 );
 
-INSERT INTO industry_person_awards VALUES (
-    '<award>',
-    <industry_person_id>
-);
+
 
 
 ---------------------------------------------------------
