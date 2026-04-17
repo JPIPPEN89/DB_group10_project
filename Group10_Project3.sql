@@ -24,8 +24,9 @@ DROP TABLE movie                    CASCADE CONSTRAINTS;
 
 CREATE TABLE movie(
     movie_ID NUMERIC(5) CONSTRAINT movie_id_pk PRIMARY KEY,
-    popularity NUMERIC(3),
-    release_date DATE,
+    movie_name VARCHAR2(30) NOT NULL, -- ADDED movie_name 
+    popularity NUMERIC(3) NOT NULL, --ADDED NOT NULL
+    release_date DATE NOT NULL, -- ADDED NOT NULL
     country_of_origin VARCHAR2(250),
     income NUMERIC(4),                                          -- e.g. 3.5m
     production_cost NUMERIC(4),                                 --e.g. 3.5m
@@ -34,14 +35,19 @@ CREATE TABLE movie(
     );
 
 
+
+
+
 CREATE TABLE genre (
-    genre_id NUMERIC(5) CONSTRAINT genre_id_pk PRIMARY KEY
+    genre_id NUMERIC(5) CONSTRAINT genre_id_pk PRIMARY KEY,
+    genre_name VARCHAR2(20) NOT NULL -- added genrename
     );
 
 
 CREATE TABLE stars(
     star_id NUMERIC(5) CONSTRAINT star_id_pk PRIMARY KEY,
-    birth_date DATE,                                    
+    star_name VARCHAR2(30) NOT NULL, --ADDED star_name
+    birth_date DATE NOT NULL,   -- ADDED NOT NULL                                    
     height NUMERIC(5),                                      
     biography VARCHAR2(500),
     alt_names VARCHAR2(100)
@@ -49,7 +55,7 @@ CREATE TABLE stars(
 
 CREATE TABLE industry_person(
     industry_person_id NUMERIC(5) CONSTRAINT industry_person_id_pk PRIMARY KEY,
-    birth_date DATE,
+    birth_date DATE('YYYY-MM-DD') ,  
     birth_place VARCHAR2(100),
     biography VARCHAR2(500),
     names VARCHAR2(100),
@@ -183,3 +189,69 @@ CREATE TABLE has_credit (
     CONSTRAINT hc_movie_fk FOREIGN KEY (movie_id) REFERENCES movie(movie_ID),
     CONSTRAINT hc_ind_person_fk FOREIGN KEY (industry_person_id) REFERENCES industry_person(industry_person_id)
     );
+
+--==========================================
+--            STREET FIGHTER
+--==========================================
+
+
+    INSERT INTO movie VALUES (
+    1, 'Street Fighter', 479, DATE '2026-10-16',
+    'United States', 0, NULL, 163, 'Sydney, Australia'
+);
+
+INSERT INTO industry_person VALUES (
+    1, NULL, 'Kinusaga, Japan', 'Mini Bio', 'Kitao Sakurai', 'Eric Andre Show'
+);
+
+INSERT INTO industry_person VALUES (
+    2, NULL, NULL, NULL, 'Dalan Musson', 'Captain America'
+);
+
+INSERT INTO industry_person VALUES (
+    3, NULL, NULL, NULL, 'Cale Boyter', 'Dune: Part One'
+);
+
+INSERT INTO stars VALUES (
+    1, 'Jason Momoa', DATE '1979-08-01', 193, 'Enter Bio', NULL
+);
+
+INSERT INTO genre VALUES (1, 'Drama');
+
+
+
+INSERT INTO director VALUES (1, 'DGA');
+INSERT INTO writer VALUES (2, 'Action');
+INSERT INTO producer VALUES (3, 'Warner Bros');
+
+
+
+INSERT INTO belongs_to VALUES (1, 1);
+
+
+INSERT INTO acts_in VALUES (1, 1);
+
+INSERT INTO has_credit VALUES (1, 1);
+INSERT INTO has_credit VALUES (1, 2);
+INSERT INTO has_credit VALUES (1, 3);
+
+
+INSERT INTO writes VALUES (1, 2);
+
+
+INSERT INTO cast_by VALUES (1, 1);
+
+
+
+INSERT INTO movie_languages VALUES ('English', 1);
+INSERT INTO production_companies VALUES ('Warner Bros', 1);
+
+INSERT INTO reviews VALUES (
+    1, 85, 'Great action movie', 1
+);
+
+INSERT INTO stars_other_works VALUES ('Aquaman', 1);
+INSERT INTO relatives VALUES ('Sibling Name', 1);
+INSERT INTO stars_photos VALUES ('photo1.jpg', 1);
+
+INSERT INTO industry_person_awards VALUES ('Best Director', 1);
