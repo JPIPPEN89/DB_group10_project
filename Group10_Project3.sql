@@ -448,144 +448,10 @@ INSERT INTO relatives VALUES (
 
 
 ---------------------------------------------------------------------------
-
--- =========================
--- BASE TABLES
--- =========================
-
-INSERT INTO movie VALUES (
-    <movie_ID>,
-    '<movie_name>',
-    <popularity>,
-    DATE '<YYYY-MM-DD>',
-    '<country_of_origin>',
-    <income>,
-    <production_cost>,
-    <duration>,
-    '<filming_locations>'
-);
-
-INSERT INTO genre VALUES (
-    <genre_id>,
-    '<genre_name>'
-);
-
-INSERT INTO stars VALUES (
-    <star_id>,
-    '<star_name>',
-    DATE '<YYYY-MM-DD>',
-    <height>,
-    '<biography>',
-    '<alt_names>'
-);
-
-INSERT INTO industry_person VALUES (
-    <industry_person_id>,
-    DATE '<YYYY-MM-DD>',
-    '<birth_place>',
-    '<biography>',
-    '<name>',
-    '<known_for>'
-);
-
--- =========================
--- SUBTYPE TABLES
--- =========================
-
-INSERT INTO producer VALUES (
-    <industry_person_id>,
-    '<production_company>'
-);
-
-INSERT INTO director VALUES (
-    <industry_person_id>,
-    '<guild_membership>'
-);
-
-INSERT INTO writer VALUES (
-    <industry_person_id>,
-    '<genre_speciality>'
-);
-
--- =========================
--- DEPENDENT TABLES
--- =========================
-
-INSERT INTO movie_languages VALUES (
-    '<language>',
-    <movie_ID>
-);
-
-INSERT INTO production_companies VALUES (
-    '<production_company>',
-    <movie_ID>
-);
-
-INSERT INTO reviews VALUES (
-    <review_id>,
-    <review_score>,
-    '<review>',
-    <movie_ID>
-);
-
--- =========================
--- JUNCTION TABLES
--- =========================
-
-INSERT INTO belongs_to VALUES (
-    <genre_id>,
-    <movie_ID>
-);
-
-INSERT INTO acts_in VALUES (
-    <movie_ID>,
-    <star_id>
-);
-
-INSERT INTO writes VALUES (
-    <movie_ID>,
-    <industry_person_id>
-);
-
-INSERT INTO has_credit VALUES (
-    <movie_ID>,
-    <industry_person_id>
-);
-
-INSERT INTO cast_by VALUES (
-    <star_id>,
-    <industry_person_id>
-);
-
--- =========================
--- EXTRA RELATION TABLES
--- =========================
-
-INSERT INTO stars_other_works VALUES (
-    '<work>',
-    <star_id>
-);
-
-INSERT INTO relatives VALUES (
-    '<relative_name>',
-    <star_id>
-);
-
-INSERT INTO stars_photos VALUES (
-    '<photo_path>',
-    <star_id>
-);
-
-INSERT INTO industry_person_awards VALUES (
-    '<award>',
-    <industry_person_id>
-);
-
-
 ---------------------------------------------------------
 
 -- =========================
--- BASE TABLES
+-- Zombieland
 -- =========================
 
 INSERT INTO movie VALUES (
@@ -749,6 +615,277 @@ INSERT INTO stars_photos VALUES (
     'Time Magazine',
     4
 );
+
+
+-------------------------------------------------------------------------
+
+
+
+-- =========================
+-- BASE TABLES
+-- =========================
+
+INSERT INTO movie VALUES (
+    5,
+    'Deadpool',
+    509,
+    DATE '2016-02-12',
+    'United States',
+    782.8,
+    58,
+    108,
+    'Vancouver, British Columbia, Canada'
+);
+
+INSERT INTO genre VALUES (
+    4,
+    'Dark Comedy'
+);
+
+INSERT INTO stars VALUES (
+    5,
+    'Ryan Reynolds',
+    DATE '1976-10-23',
+    74,
+    'Ryan Rodney Reynolds was born on October 23, 1976 in Vancouver, 
+    British Columbia, Canada, the youngest of four children. His father, James Chester Reynolds, was a food wholesaler...',
+    'Champ Nightengale'
+);
+
+INSERT INTO stars VALUES (
+    6,
+    'Morrena Baccarin',
+    DATE '1979-06-02',
+    67,
+    'Morena Baccarin was born in Rio de Janeiro, Brazil, to actress Vera Setta and journalist Fernando Baccarin... ',
+    NULL
+);
+
+INSERT INTO industry_person VALUES (
+    9,
+    DATE '1964-10-10',
+    'Fort Washington, Maryland, USA',
+    'Tim Miller is an American animator, film director, creative director 
+    and visual effects artist. He was nominated for the Academy Award',
+    'Tim Miller',
+    'Batman: Arkham Origins'
+);
+
+INSERT INTO industry_person VALUES (
+    10,
+    DATE '1976-10-23',
+    'Vancouver, Canada',
+    'Ryan Rodney Reynolds was born on October 23, 1976 in Vancouver, 
+    British Columbia, Canada, the youngest of four children. His father, James Chester Reynolds, was a food wholesaler...',
+    'Ryan Reynolds',
+    'Waiting'
+);
+
+-- =========================
+-- SUBTYPE TABLES
+-- =========================
+
+INSERT INTO producer VALUES (
+    10,
+    'Twentieth Century Fox'
+);
+
+INSERT INTO director VALUES (
+    9,
+    'DBA'
+);
+
+
+
+-- =========================
+-- DEPENDENT TABLES
+-- =========================
+
+INSERT INTO movie_languages VALUES (
+    'English',
+    5
+);
+
+INSERT INTO production_companies VALUES (
+    'Twentieth Century Fox',
+    5
+);
+
+INSERT INTO production_companies VALUES (
+    'Marvel Entertainment',
+    5
+);
+
+INSERT INTO reviews VALUES (
+    3,
+    8,
+    'reviews',
+    5
+);
+
+-- =========================
+-- JUNCTION TABLES
+-- =========================
+
+INSERT INTO belongs_to VALUES (
+    4,
+    5
+);
+
+INSERT INTO acts_in VALUES (
+    5,
+    5
+);
+
+INSERT INTO acts_in VALUES (
+    5,
+    6
+);
+
+INSERT INTO writes VALUES (
+    5,
+    7
+);
+
+INSERT INTO has_credit VALUES (
+    5,
+    10
+);
+
+INSERT INTO has_credit VALUES (
+    5,
+    9
+);
+
+INSERT INTO cast_by VALUES (
+    6,
+    10
+);
+
+-- =========================
+-- EXTRA RELATION TABLES
+-- =========================
+
+INSERT INTO stars_other_works VALUES (
+    'Waiting',
+    5
+);
+
+INSERT INTO relatives VALUES (
+    'James Reynolds',
+    5
+);
+
+
+-- =========================
+-- THRASH (2026)
+-- =========================
+
+-- BASE TABLE
+INSERT INTO movie VALUES (
+    6,
+    'Thrash',
+    253, 
+    DATE '2026-04-10', 
+    'Australia',
+    NULL, 
+    NULL, 
+    86,
+    'Docklands Studios, Melbourne, Victoria, Australia'
+);
+
+
+INSERT INTO genre VALUES (6, 'Horror');
+
+INSERT INTO belongs_to VALUES (6, 6);
+
+
+INSERT INTO stars VALUES (
+    7,
+    'Phoebe Dynevor',
+    '1995-04-17', 
+    65, -- height placeholder
+    'Phoebe Dynevor is a British actress born in Manchester, England in 1995...',
+    NULL
+);
+
+INSERT INTO stars VALUES (
+    8,
+    'Djimon Hounsou',
+    '1964-04-24',
+    74,
+    'Djimon Hounsou was born in Cotonou, Benin, in west Africa to Albertine and Pierre Hounsou, a cook... ',
+    NULL
+);
+
+
+INSERT INTO acts_in VALUES (6, 7);
+INSERT INTO acts_in VALUES (6, 8);
+
+
+INSERT INTO industry_person VALUES (
+    11,
+    '1979,12-06',
+    'Alta, Norway',
+    'Bio placeholder',
+    'Tommy Wirkola',
+    'Director / Writer'
+);
+
+
+INSERT INTO director VALUES (
+    11,
+    <guild_membership>
+);
+
+
+INSERT INTO writer VALUES (
+    11,
+    'Horror / Thriller'
+);
+
+-- INDUSTRY PERSON (Producer)
+INSERT INTO industry_person VALUES (
+    12,
+    '1968-04-17',
+    'Philadelphia, Pennsylvania',
+    'Adam McKay (born April 17, 1968) is an American screenwriter, director, comedian, and actor... ',
+    'Adam McKay',
+    'Talladega Nights'
+);
+
+
+INSERT INTO producer VALUES (
+    12,
+    'Hyperobject Industries'
+);
+
+
+INSERT INTO writes VALUES (6, 11);
+
+
+INSERT INTO has_credit VALUES (6, 11); -- director/writer
+INSERT INTO has_credit VALUES (6, 12); -- producer
+
+
+INSERT INTO cast_by VALUES (7, 11);
+INSERT INTO cast_by VALUES (8, 11);
+
+
+INSERT INTO movie_languages VALUES ('English', 6);
+
+
+INSERT INTO production_companies VALUES ('Hyperobject Industries', 6);
+INSERT INTO production_companies VALUES ('Sony Pictures Releasing', 6);
+
+
+INSERT INTO reviews VALUES (
+    6,
+    51, 
+    'mixed audience reception',
+    6
+);
+
 
 
 
