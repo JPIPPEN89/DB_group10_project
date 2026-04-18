@@ -6,7 +6,7 @@ DROP TABLE belongs_to               CASCADE CONSTRAINTS;
 DROP TABLE writes                   CASCADE CONSTRAINTS;
 DROP TABLE industry_person_awards   CASCADE CONSTRAINTS;
 DROP TABLE stars_photos             CASCADE CONSTRAINTS;
-DROP TABLE relatives                CASCADE CONSTRAINTS;
+DROP TABLE relatives                CASCADE CONSTRAINTS; -- fix actor id 1
 DROP TABLE stars_other_works        CASCADE CONSTRAINTS;
 DROP TABLE reviews                  CASCADE CONSTRAINTS;
 DROP TABLE production_companies     CASCADE CONSTRAINTS;
@@ -25,7 +25,7 @@ DROP TABLE movie                    CASCADE CONSTRAINTS;
 CREATE TABLE movie(
     movie_ID NUMERIC(5) CONSTRAINT movie_id_pk PRIMARY KEY,
     movie_name VARCHAR2(30) NOT NULL, -- ADDED movie_name 
-    popularity NUMERIC(3) NOT NULL, --ADDED NOT NULL
+    popularity NUMERIC(4) NOT NULL, --ADDED NOT NULL
     release_date DATE NOT NULL, -- ADDED NOT NULL
     country_of_origin VARCHAR2(250),
     income NUMERIC(4),                                          -- e.g. 3.5m
@@ -55,7 +55,7 @@ CREATE TABLE stars(
 
 CREATE TABLE industry_person(
     industry_person_id NUMERIC(5) CONSTRAINT industry_person_id_pk PRIMARY KEY,
-    birth_date DATE('YYYY-MM-DD') ,  
+    birth_date DATE ,  
     birth_place VARCHAR2(100),
     biography VARCHAR2(500),
     names VARCHAR2(100),
@@ -190,10 +190,8 @@ CREATE TABLE has_credit (
     CONSTRAINT hc_ind_person_fk FOREIGN KEY (industry_person_id) REFERENCES industry_person(industry_person_id)
     );
 
---==========================================
---            STREET FIGHTER
---==========================================
 
+--            STREET FIGHTER
 
     INSERT INTO movie VALUES (
     1, 'Street Fighter', 479, DATE '2026-10-16',
@@ -201,7 +199,11 @@ CREATE TABLE has_credit (
 );
 
 INSERT INTO industry_person VALUES (
-    1, NULL, 'Kinusaga, Japan', 'Mini Bio', 'Kitao Sakurai', 'Eric Andre Show'
+    1, NULL, 
+    'Kinusaga, Japan',
+     'Kitao Sakurai is a Japanese-American writer and director,', 
+     'Kitao Sakurai',
+      'Eric Andre Show'
 );
 
 INSERT INTO industry_person VALUES (
@@ -213,7 +215,12 @@ INSERT INTO industry_person VALUES (
 );
 
 INSERT INTO stars VALUES (
-    1, 'Jason Momoa', DATE '1979-08-01', 193, 'Enter Bio', NULL
+    1, 'Jason Momoa', 
+    DATE '1979-08-01',
+     193, 
+     'Joseph Jason Namakaeha Momoa was born in Honolulu, Hawaii.
+     He is the son of Coni (Lemke), a photographer, and Joseph Momoa, a painter.',
+      NULL
 );
 
 INSERT INTO genre VALUES (1, 'Drama');
@@ -256,14 +263,14 @@ INSERT INTO stars_photos VALUES ('photo1.jpg', 1);
 
 INSERT INTO industry_person_awards VALUES ('Best Director', 1);
 
---================================================================
+-----------------------------------------------------------
 --          AQUAMAN
---==============================================================
 
 
-    INSERT INTO movie VALUES (
+
+   INSERT INTO movie VALUES (
     2, 'Aquaman and the Lost Kingdom', 2362, DATE '2023-12-22',
-    'United Kingdom', 40.4,20.5 ,124 , 'London, England'
+    'United Kingdom', 40, 20, 124, 'London, England'
 );
 
 INSERT INTO genre VALUES (2, 'Action');
@@ -279,8 +286,8 @@ INSERT INTO stars VALUES (
     NULL
 );
 
-INSERT INTO acts_in VALUES (2, 1); -- Jason Momoa (already exists)
-INSERT INTO acts_in VALUES (2, 2); -- Patrick Wilson
+INSERT INTO acts_in VALUES (2, 1); 
+INSERT INTO acts_in VALUES (2, 2); 
 
 INSERT INTO industry_person VALUES (
     4,
@@ -308,15 +315,15 @@ INSERT INTO reviews VALUES (
 
 
 
--- =========================
+------------------------------------------------------------------------
 -- Uncharted
--- =========================
+
 
 INSERT INTO movie VALUES (
     3,
     'Uncharted',
     735,
-    DATE '2022-18-02',
+    DATE '2022-02-18', 
     'Spain',
     407,
     120,
@@ -340,17 +347,17 @@ INSERT INTO stars VALUES (
 
 INSERT INTO industry_person VALUES (
     5,
-    DATE '1974-31-10',
+    DATE '1974-10-31',
     'Washington, District of Columbia, USA',
-    'Ruben Fleischer was born on October 31, 1974 in Washington, District of Columbia, USA...',
+    'Ruben Fleischer...',
     'Ruben Fleishcer',
     'Directing Zombie Land'
 );
 
 INSERT INTO industry_person VALUES (
     6,
-    DATE '<1983-01-08>',
-    '<birth_place>',
+    DATE '1983-01-08',
+    'Salt Lake City, Utah',
     'Rafe Judkins was born on January 8, 1983 in Salt Lake City, Utah, USA. He is a producer and writer...',
     'Rafe Judkins',
     'Wheel of Time, Uncharted'
@@ -360,17 +367,14 @@ INSERT INTO industry_person VALUES (
 
 INSERT INTO director VALUES (
     5,
-    '<guild_membership>'
+    'DBA'
 );
 
 INSERT INTO writer VALUES (
     6,
-    '<genre_speciality>'
+    'Adventure'
 );
 
--- =========================
--- DEPENDENT TABLES
--- =========================
 
 INSERT INTO movie_languages VALUES (
     'Spanish',
@@ -392,10 +396,6 @@ INSERT INTO production_companies VALUES (
     3
 );
 
-
--- =========================
--- JUNCTION TABLES
--- =========================
 
 INSERT INTO belongs_to VALUES (
     3,
@@ -432,9 +432,6 @@ INSERT INTO cast_by VALUES (
     6
 );
 
--- =========================
--- EXTRA RELATION TABLES
--- =========================
 
 INSERT INTO stars_other_works VALUES (
     'Billy Elliot: The Musical',
@@ -450,9 +447,9 @@ INSERT INTO relatives VALUES (
 ---------------------------------------------------------------------------
 ---------------------------------------------------------
 
--- =========================
+
 -- Zombieland
--- =========================
+
 
 INSERT INTO movie VALUES (
     4,
@@ -461,7 +458,7 @@ INSERT INTO movie VALUES (
     DATE '2009-10-02',
     'United States',
     102,
-    23.6,
+    23,
     88,
     'Atlanta, Georgia, USA'
 );
@@ -502,34 +499,22 @@ INSERT INTO industry_person VALUES (
 );
 
 
-
--- =========================
--- SUBTYPE TABLES
--- =========================
-
 INSERT INTO producer VALUES (
     7,
-    '<production_company>'
+    'Columbia Pictures'
 );
 
 INSERT INTO producer VALUES (
     8,
-    '<production_company>'
+    'Columbia Pictures'
 );
 
-INSERT INTO director VALUES (
-    5,
-    '<guild_membership>'
-);
 
 INSERT INTO writer VALUES (
     7,
-    '<genre_speciality>'
+    'Action'
 );
 
--- =========================
--- DEPENDENT TABLES
--- =========================
 
 INSERT INTO movie_languages VALUES (
     'English',
@@ -548,9 +533,6 @@ INSERT INTO reviews VALUES (
     4
 );
 
--- =========================
--- JUNCTION TABLES
--- =========================
 
 INSERT INTO belongs_to VALUES (
     4,
@@ -587,9 +569,6 @@ INSERT INTO cast_by VALUES (
     5
 );
 
--- =========================
--- EXTRA RELATION TABLES
--- =========================
 
 INSERT INTO stars_other_works VALUES (
     'True Detective',
@@ -618,12 +597,7 @@ INSERT INTO stars_photos VALUES (
 
 
 -------------------------------------------------------------------------
-
-
-
--- =========================
--- BASE TABLES
--- =========================
+--DEADPOOL
 
 INSERT INTO movie VALUES (
     5,
@@ -631,16 +605,12 @@ INSERT INTO movie VALUES (
     509,
     DATE '2016-02-12',
     'United States',
-    782.8,
+    782,
     58,
     108,
     'Vancouver, British Columbia, Canada'
 );
 
-INSERT INTO genre VALUES (
-    4,
-    'Dark Comedy'
-);
 
 INSERT INTO stars VALUES (
     5,
@@ -681,9 +651,6 @@ INSERT INTO industry_person VALUES (
     'Waiting'
 );
 
--- =========================
--- SUBTYPE TABLES
--- =========================
 
 INSERT INTO producer VALUES (
     10,
@@ -695,11 +662,6 @@ INSERT INTO director VALUES (
     'DBA'
 );
 
-
-
--- =========================
--- DEPENDENT TABLES
--- =========================
 
 INSERT INTO movie_languages VALUES (
     'English',
@@ -722,10 +684,6 @@ INSERT INTO reviews VALUES (
     'reviews',
     5
 );
-
--- =========================
--- JUNCTION TABLES
--- =========================
 
 INSERT INTO belongs_to VALUES (
     4,
@@ -762,10 +720,6 @@ INSERT INTO cast_by VALUES (
     10
 );
 
--- =========================
--- EXTRA RELATION TABLES
--- =========================
-
 INSERT INTO stars_other_works VALUES (
     'Waiting',
     5
@@ -777,11 +731,9 @@ INSERT INTO relatives VALUES (
 );
 
 
--- =========================
--- THRASH (2026)
--- =========================
+-----------------------------------------------------------------------------
+-- THRASH 
 
--- BASE TABLE
 INSERT INTO movie VALUES (
     6,
     'Thrash',
@@ -803,8 +755,8 @@ INSERT INTO belongs_to VALUES (6, 6);
 INSERT INTO stars VALUES (
     7,
     'Phoebe Dynevor',
-    '1995-04-17', 
-    65, -- height placeholder
+    DATE '1995-04-17', 
+    65, 
     'Phoebe Dynevor is a British actress born in Manchester, England in 1995...',
     NULL
 );
@@ -812,7 +764,7 @@ INSERT INTO stars VALUES (
 INSERT INTO stars VALUES (
     8,
     'Djimon Hounsou',
-    '1964-04-24',
+    DATE '1964-04-24',
     74,
     'Djimon Hounsou was born in Cotonou, Benin, in west Africa to Albertine and Pierre Hounsou, a cook... ',
     NULL
@@ -825,17 +777,17 @@ INSERT INTO acts_in VALUES (6, 8);
 
 INSERT INTO industry_person VALUES (
     11,
-    '1979,12-06',
+    DATE '1979-12-06',
     'Alta, Norway',
-    'Bio placeholder',
+    'Tommy Wirkola was born on December 6, 1979 in Alta, Norway. He',
     'Tommy Wirkola',
-    'Director / Writer'
+    'Dead Snow 2: Red vs. Dead'
 );
 
 
 INSERT INTO director VALUES (
     11,
-    <guild_membership>
+    NULL
 );
 
 
@@ -844,10 +796,10 @@ INSERT INTO writer VALUES (
     'Horror / Thriller'
 );
 
--- INDUSTRY PERSON (Producer)
+
 INSERT INTO industry_person VALUES (
     12,
-    '1968-04-17',
+    DATE '1968-04-17',
     'Philadelphia, Pennsylvania',
     'Adam McKay (born April 17, 1968) is an American screenwriter, director, comedian, and actor... ',
     'Adam McKay',
@@ -864,8 +816,8 @@ INSERT INTO producer VALUES (
 INSERT INTO writes VALUES (6, 11);
 
 
-INSERT INTO has_credit VALUES (6, 11); -- director/writer
-INSERT INTO has_credit VALUES (6, 12); -- producer
+INSERT INTO has_credit VALUES (6, 11); 
+INSERT INTO has_credit VALUES (6, 12); 
 
 
 INSERT INTO cast_by VALUES (7, 11);
@@ -887,140 +839,451 @@ INSERT INTO reviews VALUES (
 );
 
 
+----------------------------------------------------------------------------------------------------
+-- READY OR NOT 2: HERE I COME
 
+
+INSERT INTO movie VALUES (
+    7,
+    'Ready or Not 2: Here I Come',
+    185,
+    DATE '2026-03-20',
+    'United States / Canada',
+    37.8, 
+    17.0,  
+    108,
+    'Toronto, Ontario, Canada'
+);
+
+
+
+
+INSERT INTO belongs_to VALUES (6, 7);
+
+
+INSERT INTO stars VALUES (
+    9,
+    'Samara Weaving',
+    DATE '1992-02-23',
+    65,
+    'Samara Weaving was born on February 23, 1992 in Adelaide, South Australia, Australia...',
+    NULL
+);
+
+INSERT INTO stars VALUES (
+    10,
+    'Kathryn Newton',
+    DATE '1997-02-08',
+    65,
+    'Kathryn co-starred as Cassie Lang in Ant-Man and the Wasp: Quantumania 2023, followed by Lisa Frankenstein...',
+    NULL
+);
+
+
+INSERT INTO acts_in VALUES (7, 9);
+INSERT INTO acts_in VALUES (7, 10);
+
+
+INSERT INTO industry_person VALUES (
+    13,
+    NULL,
+    'Oakland, California',
+    'Matt Bettinelli-Olpin was born in Oakland, California, USA. Matt is a director and writer...',
+    'Matt Bettinelli-Olpin',
+    'Scream VI'
+);
+
+INSERT INTO industry_person VALUES (
+    14,
+    DATE '1982-03-06',
+    'Flagstaff, Arizona',
+    'Tyler Gillett was born on March 6, 1982 in Flagstaff, Arizona, USA. He is a director...',
+    'Tyler Gillett',
+    'V/H/S'
+);
+
+
+INSERT INTO director VALUES (13, NULL);
+INSERT INTO director VALUES (14, NULL);
+
+
+INSERT INTO industry_person VALUES (
+    15,
+    DATE '1975-11-01',
+    'Grand Island, Nebraska',
+    'Guy Busick was born on November 1, 1975 in Grand Island, Nebraska, USA. He is a writer and producer...',
+    'Guy Busick',
+    'Scream'
+);
+
+
+INSERT INTO writer VALUES (
+    15,
+    'Horror / Thriller'
+);
+
+
+INSERT INTO writes VALUES (7, 15);
+
+
+INSERT INTO has_credit VALUES (7, 13); -- director
+INSERT INTO has_credit VALUES (7, 14); -- director
+INSERT INTO has_credit VALUES (7, 15); -- writer
+
+
+
+INSERT INTO cast_by VALUES (9, 13);
+INSERT INTO cast_by VALUES (10, 13);
+
+
+INSERT INTO movie_languages VALUES ('English', 7);
+
+
+INSERT INTO production_companies VALUES ('Mythology Entertainment', 7);
+INSERT INTO production_companies VALUES ('Ontario Creates', 7);
+
+
+INSERT INTO reviews VALUES (
+    7,
+    68,
+    'Mixed to positive reception based on IMDb user reviews',
+    7
+);
 
 
 ---------------------------------------------------------
 
--- =========================
--- BASE TABLES
--- =========================
+-- ANACONDA 
+
 
 INSERT INTO movie VALUES (
-    <movie_ID>,
-    '<movie_name>',
-    <popularity>,
-    DATE '<YYYY-MM-DD>',
-    '<country_of_origin>',
-    <income>,
-    <production_cost>,
-    <duration>,
-    '<filming_locations>'
+    8,
+    'Anaconda',
+    556,
+    DATE '2025-12-25',
+    'United States',
+    135, 
+    45,  
+    99,
+    'Village Roadshow Studios, Queensland, Australia'
 );
 
-INSERT INTO genre VALUES (
-    <genre_id>,
-    '<genre_name>'
+
+
+INSERT INTO belongs_to VALUES (3, 8);
+
+
+INSERT INTO stars VALUES (
+    11,
+    'Jack Black',
+    DATE '1969-08-28',
+    66,
+    'Thomas Jacob "Jack" Black was born on August 28, 1969 in Santa Monica, California and raised in Hermosa Beach, California',
+    'JB'
 );
 
 INSERT INTO stars VALUES (
-    <star_id>,
-    '<star_name>',
-    DATE '<YYYY-MM-DD>',
-    <height>,
-    '<biography>',
-    '<alt_names>'
+    12,
+    'Paul Rudd',
+    DATE '1969-04-06',
+    69,
+    'Paul Stephen Rudd was born in Passaic, New Jersey. His parents, Michael and Gloria, both from Jewish families...',
+    NULL
 );
+
+INSERT INTO acts_in VALUES (8, 11);
+INSERT INTO acts_in VALUES (8, 12);
+
 
 INSERT INTO industry_person VALUES (
-    <industry_person_id>,
-    DATE '<YYYY-MM-DD>',
-    '<birth_place>',
-    '<biography>',
-    '<name>',
-    '<known_for>'
+    21,
+    DATE '1980-04-02',
+    'Boston, Massachusetts',
+    'Director and writer known for comedy films',
+    'Tom Gormican',
+    'The Unbearable Weight of Massive Talent'
 );
 
--- =========================
--- SUBTYPE TABLES
--- =========================
-
-INSERT INTO producer VALUES (
-    <industry_person_id>,
-    '<production_company>'
-);
 
 INSERT INTO director VALUES (
-    <industry_person_id>,
-    '<guild_membership>'
+    21,
+    'DBA'
 );
+
+
+INSERT INTO industry_person VALUES (
+    22,
+    Null,
+    NULL,
+    NULL,
+    'Kevin Etten',
+    'The Unbearable Weight of Massive Talent'
+);
+
 
 INSERT INTO writer VALUES (
-    <industry_person_id>,
-    '<genre_speciality>'
+    22,
+    'Comedy / Adventure'
 );
 
--- =========================
--- DEPENDENT TABLES
--- =========================
 
-INSERT INTO movie_languages VALUES (
-    '<language>',
-    <movie_ID>
+INSERT INTO writes VALUES (8, 22);
+
+
+INSERT INTO has_credit VALUES (8, 21); 
+INSERT INTO has_credit VALUES (8, 22); 
+
+
+INSERT INTO cast_by VALUES (11, 21);
+INSERT INTO cast_by VALUES (12, 21);
+
+
+INSERT INTO movie_languages VALUES ('English', 8);
+INSERT INTO movie_languages VALUES ('Portuguese', 8);
+
+
+INSERT INTO production_companies VALUES ('Columbia Pictures', 8);
+
+-- REVIEW
+INSERT INTO reviews VALUES (
+    8,
+    56,
+    'Mixed reviews, generally considered fun but flawed',
+    8
 );
 
-INSERT INTO production_companies VALUES (
-    '<production_company>',
-    <movie_ID>
+-----------------------------------------
+-- PROJECT HAIL MARY 
+
+
+
+INSERT INTO movie VALUES (
+    9,
+    'Project Hail Mary',
+    240,
+    DATE '2026-03-20',
+    'United States',
+    533, 
+    200, 
+    156,
+    'South Parade Pier, Portsmouth, England'
 );
+
+
+INSERT INTO genre VALUES (9, 'Sci-Fi');
+
+
+INSERT INTO belongs_to VALUES (9, 9);
+
+
+INSERT INTO stars VALUES (
+    13,
+    'Ryan Gosling',
+    DATE '1980-11-12',
+    72,
+    'Born Ryan Thomas Gosling in London, Ontario, Canada, 
+    he is the son of Donna (Wilson), a secretary, and Thomas Ray Gosling, a traveling salesman...',
+    'Ry'
+);
+
+INSERT INTO stars VALUES (
+    14,
+    'Sandra Hüller',
+    DATE '1978-04-30',
+    68,
+    'Sandra Hüller was born in Suhl. She studied acting at the Ernst Busch Academy of Dramatic Arts in Berlin...',
+    NULL
+);
+
+
+INSERT INTO acts_in VALUES (9, 13);
+INSERT INTO acts_in VALUES (9, 14);
+
+
+INSERT INTO industry_person VALUES (
+    17,
+    DATE '1975-07-12',
+    'Miami, Florida',
+    'Director known for The Lego Movie and 21 Jump Street',
+    'Phil Lord',
+    'The Lego Movie'
+);
+
+-- DIRECTOR subtype
+INSERT INTO director VALUES (
+    17,
+    NULL
+);
+
+-- INDUSTRY PERSON (ONE WRITER ONLY)
+INSERT INTO industry_person VALUES (
+    18,
+    DATE '1975-02-24',
+    'United States',
+    'Drew Goddard was raised in Los Alamos, New Mexico. 
+    He attended Los Alamos High School in Los Alamos, New Mexico and graduated in 1993',
+    'Drew Goddard',
+    'The Martian'
+);
+
+-- WRITER subtype
+INSERT INTO writer VALUES (
+    18,
+    'Sci-Fi'
+);
+
+-- WRITES
+INSERT INTO writes VALUES (9, 18);
+
+-- HAS_CREDIT
+INSERT INTO has_credit VALUES (9, 17);
+INSERT INTO has_credit VALUES (9, 18);
+
+-- CAST_BY
+INSERT INTO cast_by VALUES (13, 17);
+INSERT INTO cast_by VALUES (14, 17);
+
+-- LANGUAGES
+INSERT INTO movie_languages VALUES ('English', 9);
+
+-- PRODUCTION COMPANIES (minimal)
+INSERT INTO production_companies VALUES ('Amazon MGM Studios', 9);
+
+-- REVIEW
+INSERT INTO reviews VALUES (
+    9,
+    84,
+    'Highly rated sci-fi film with strong emotional storytelling',
+    9
+);
+
+INSERT INTO industry_person_awards VALUES ('Best Director', 17);
+
+-----------------------------------------
+-- THE DRAMA 
+
+
+-- BASE TABLE
+INSERT INTO movie VALUES (
+    10,
+    'The Drama',
+    256,
+    DATE '2026-04-03',
+    'United States',
+    57,  
+    28,  
+    105,
+    'Boston, Massachusetts, USA'
+);
+
+
+INSERT INTO belongs_to VALUES (1, 10);
+
+
+INSERT INTO stars VALUES (
+    15,
+    'Zendaya',
+    DATE '1996-09-01',
+    70,
+    'Zendaya (which means "to give thanks" in the language of Shona)
+     is an American actress and singer born in Oakland, California...',
+    NULL
+);
+
+INSERT INTO stars VALUES (
+    16,
+    'Robert Pattinson',
+    DATE '1986-05-13',
+    73,
+    'Robert Douglas Thomas Pattinson was born May 13, 1986 in London, England, 
+    to Richard Pattinson, a car dealer importing vintage cars, and Clare Pattinson',
+    NULL
+);
+
+
+INSERT INTO acts_in VALUES (10, 15);
+INSERT INTO acts_in VALUES (10, 16);
+
+
+INSERT INTO industry_person VALUES (
+    19,
+    NULL,
+    'Norway',
+    'Kristoffer Borgli was born in 1985 in Oslo, Norway.',
+    'Kristoffer Borgli',
+    'Dream Scenario'
+);
+
+-- DIRECTOR subtype
+INSERT INTO director VALUES (
+    19,
+    NULL
+);
+
+-- WRITER subtype
+INSERT INTO writer VALUES (
+    19,
+    'Drama / Dark Comedy'
+);
+
+
+INSERT INTO industry_person VALUES (
+    20,
+    DATE '1986-07-15',
+    'New York City, New York',
+    'Ari Aster is an American film director, screenwriter, and producer.',
+    'Ari Aster',
+    'Hereditary'
+);
+
+INSERT INTO producer VALUES (
+    20,
+    'Square Peg'
+);
+
+
+INSERT INTO writes VALUES (10, 19);
+
+
+INSERT INTO has_credit VALUES (10, 19);
+INSERT INTO has_credit VALUES (10, 20);
+
+
+INSERT INTO cast_by VALUES (15, 19);
+INSERT INTO cast_by VALUES (16, 19);
+
+
+INSERT INTO movie_languages VALUES ('English', 10);
+
+
+INSERT INTO production_companies VALUES ('A24', 10);
+INSERT INTO production_companies VALUES ('Square Peg', 10);
+
 
 INSERT INTO reviews VALUES (
-    <review_id>,
-    <review_score>,
-    '<review>',
-    <movie_ID>
+    10,
+    75,
+    'Strong performances and emotionally intense storytelling',
+    10
 );
-
--- =========================
--- JUNCTION TABLES
--- =========================
-
-INSERT INTO belongs_to VALUES (
-    <genre_id>,
-    <movie_ID>
-);
-
-INSERT INTO acts_in VALUES (
-    <movie_ID>,
-    <star_id>
-);
-
-INSERT INTO writes VALUES (
-    <movie_ID>,
-    <industry_person_id>
-);
-
-INSERT INTO has_credit VALUES (
-    <movie_ID>,
-    <industry_person_id>
-);
-
-INSERT INTO cast_by VALUES (
-    <star_id>,
-    <industry_person_id>
-);
-
--- =========================
--- EXTRA RELATION TABLES
--- =========================
 
 INSERT INTO stars_other_works VALUES (
-    '<work>',
-    <star_id>
+    'Euphoria',
+    15
 );
 
-INSERT INTO relatives VALUES (
-    '<relative_name>',
-    <star_id>
+INSERT INTO stars_other_works VALUES (
+    'The Batman',
+    16
+);
+
+
+INSERT INTO stars_photos VALUES (
+    'zendaya_photo.jpg',
+    15
 );
 
 INSERT INTO stars_photos VALUES (
-    '<photo_path>',
-    <star_id>
+    'pattinson_photo.jpg',
+    16
 );
-
-INSERT INTO industry_person_awards VALUES (
-    '<award>',
-    <industry_person_id>
-);
-
