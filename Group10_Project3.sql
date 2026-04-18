@@ -1289,4 +1289,3 @@ INSERT INTO stars_photos VALUES (
 );
 
 
-UPDATE reviews SET review_id = 4 WHERE movie_ID = 4;
