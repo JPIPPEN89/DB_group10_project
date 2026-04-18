@@ -1287,3 +1287,6 @@ INSERT INTO stars_photos VALUES (
     'pattinson_photo.jpg',
     16
 );
+
+
+UPDATE reviews SET review_id = 4 WHERE movie_ID = 4;
