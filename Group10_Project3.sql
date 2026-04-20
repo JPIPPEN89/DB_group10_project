@@ -1,16 +1,3 @@
---print out format
-SET LINESIZE 200
-SET PAGESIZE 50
-SET LINESIZE 200
-SET PAGESIZE 50
-
-COL movie_name FORMAT A30
-COL languages FORMAT A15
-COL production_companies FORMAT A30
-COL star_name FORMAT A20
-COL genre_name FORMAT A15
-COL names FORMAT A25
-
 
 
 -- fixed drop tables because of reverse dependency issues, children first, then parents.
