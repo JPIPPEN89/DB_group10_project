@@ -33,12 +33,10 @@ JOIN acts_in a ON m.movie_ID = a.movie_id
 JOIN stars s ON a.star_id = s.star_id
 JOIN production_companies pc ON m.movie_ID = pc.movie_ID;
 
--- production companies and the languages they've produced movies in
-SELECT pc.production_companies, ml.languages
-FROM production_companies pc
-JOIN movie m ON pc.movie_ID = m.movie_ID
-JOIN movie_languages ml ON m.movie_ID = ml.movie_ID
-ORDER BY pc.production_companies;
+-- list all names from both stars and industry persons combined (UNION)
+SELECT star_name AS name FROM stars
+UNION
+SELECT names AS name FROM industry_person;
 
 -- each movie and its average review score
 SELECT m.movie_name, AVG(r.review_score) AS avg_score
